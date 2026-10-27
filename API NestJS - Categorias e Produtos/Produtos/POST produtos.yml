@@ -10,10 +10,10 @@ http:
     type: json
     data: |-
       {
-        "nome": "Notebook",
-        "descricao": "Core i7 16GB",
-        "preco": 4500,
-        "estoque": 5,
+        "nome": "Teclado Mecânico Gamer Rise Mode GM1 White, RGB",
+        "descricao": "Teclado Mecânico Gamer Rise Mode GM1",
+        "preco": 99.99,
+        "estoque": 1,
         "categoriaId": 1
       }
   auth: inherit

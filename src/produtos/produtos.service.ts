@@ -7,49 +7,29 @@ import { UpdateProdutoDto } from './dto/update-produto.dto';
 export class ProdutosService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async criar(dto: CreateProdutoDto) {
-    const { categoriaId, ...dadosProduto } = dto;
-    return this.prisma.produto.create({
-      data: {
-        ...dadosProduto,
-        categoria: {
-          connect: { id: categoriaId },
-        },
-      },
-      include: { categoria: true },
-    });
+  criar(dto: CreateProdutoDto) {
+    return this.prisma.produto.create({ data: dto });
   }
 
-  async listar() {
-    return this.prisma.produto.findMany({
-      include: { categoria: true },
-    });
+  listarTodos() {
+    return this.prisma.produto.findMany({ include: { categoria: true } });
   }
 
-  async buscarPorId(id: number) {
+  buscarPorId(id: number) {
     return this.prisma.produto.findUnique({
       where: { id },
       include: { categoria: true },
     });
   }
 
-  async atualizar(id: number, dto: UpdateProdutoDto) {
-    const { categoriaId, ...dadosProduto } = dto;
+  atualizar(id: number, dto: UpdateProdutoDto) {
     return this.prisma.produto.update({
       where: { id },
-      data: {
-        ...dadosProduto,
-        ...(categoriaId && {
-          categoria: {
-            connect: { id: categoriaId },
-          },
-        }),
-      },
-      include: { categoria: true },
+      data: dto,
     });
   }
 
-  async remover(id: number) {
+  remover(id: number) {
     return this.prisma.produto.delete({
       where: { id },
     });

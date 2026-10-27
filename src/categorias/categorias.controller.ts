@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CategoriasService } from './categorias.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
+import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 
 @Controller('categorias')
 export class CategoriasController {
@@ -12,12 +13,22 @@ export class CategoriasController {
   }
 
   @Get()
-  listar() {
-    return this.categoriasService.listar();
+  listarTodas() {
+    return this.categoriasService.listarTodas();
   }
 
   @Get(':id')
-  buscarPorId(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriasService.buscarPorId(id);
+  buscarPorId(@Param('id') id: string) {
+    return this.categoriasService.buscarPorId(Number(id));
+  }
+
+  @Patch(':id')
+  atualizar(@Param('id') id: string, @Body() dto: UpdateCategoriaDto) {
+    return this.categoriasService.atualizar(Number(id), dto);
+  }
+
+  @Delete(':id')
+  remover(@Param('id') id: string) {
+    return this.categoriasService.remover(Number(id));
   }
 }

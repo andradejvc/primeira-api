@@ -7,10 +7,10 @@ datasource db {
 }
 
 model Categoria {
-  id        Int       @id @default(autoincrement())
-  nome      String    @unique
-  produtos  Produto[]
-  criadoEm  DateTime  @default(now())
+  id       Int       @id @default(autoincrement())
+  nome     String    @unique
+  produtos Produto[]
+  criadoEm DateTime  @default(now())
 }
 
 model Produto {
@@ -22,4 +22,17 @@ model Produto {
   categoriaId Int
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
   criadoEm    DateTime  @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
 }
